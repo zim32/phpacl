@@ -1,0 +1,17 @@
+{
+    "name": "zim32/phpacl",
+    "description": "This package allows you to sandbox third party code and use ACL rules to restrict IO, net etc...",
+    "type": "library",
+    "authors": [
+        {
+            "name": "zim32",
+            "email": "yurij.uvarov@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "PhpAcl\\": "src/PhpAcl"
+        }
+    }
+}
