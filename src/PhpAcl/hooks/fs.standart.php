@@ -3,7 +3,7 @@
 use PhpAcl\IOOperation;
 
 return [
-    [['fwrite', 'file_put_contents'], function($src) use($processRules) {
+    [['fwrite', 'fputs', 'fputcsv', 'file_put_contents'], function($src) use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
         $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
@@ -41,6 +41,30 @@ return [
         $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_READ;
         $operation->setSrc($src);
+        $processRules($operation);
+    }],
+    [['unlink'], function($src) use($processRules) {
+        $operation = new IOOperation();
+        $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
+        $operation->type = IOOperation::TYPE_DELETE;
+        $operation->setSrc($src);
+        $processRules($operation);
+    }],
+    [['mkdir', 'touch'], function($src) use($processRules) {
+        $operation = new IOOperation();
+        $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
+        $operation->type = IOOperation::TYPE_CREATE;
+        $operation->setSrc($src);
+        $processRules($operation);
+    }],
+    [['tmpfile'], function() use($processRules) {
+        $operation = new IOOperation();
+        $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
+        $operation->type = IOOperation::TYPE_CREATE;
+        $operation->setSrc('');
         $processRules($operation);
     }]
 ];

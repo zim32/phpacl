@@ -10,6 +10,8 @@ class IOOperation extends BaseOperationInfo
     const TYPE_COPY         = 'copy';
     const TYPE_OPEN         = 'open';
     const TYPE_DELETE       = 'delete';
+    const TYPE_RENAME       = 'rename';
+    const TYPE_CREATE       = 'create';
     const TYPE_SOCK_INIT    = 'sock_init';
     const TYPE_SOCK_ACCEPT  = 'sock_accept';
     const TYPE_SOCK_READ    = 'sock_read';

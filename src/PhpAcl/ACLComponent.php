@@ -76,12 +76,14 @@ class ACLComponent
         $splFsWrappers      = require __DIR__ . '/hooks/fs.spl.php';
         $streamWrappers     = require __DIR__ . '/hooks/stream.php';
         $socketWrappers     = require __DIR__ . '/hooks/socket.php';
+        $ftpWrappers        = require __DIR__ . '/hooks/fs.ftp.php';
 
         $wrappers = [];
         $wrappers = array_merge($wrappers, $standartFsWrappers);
         $wrappers = array_merge($wrappers, $splFsWrappers);
         $wrappers = array_merge($wrappers, $streamWrappers);
         $wrappers = array_merge($wrappers, $socketWrappers);
+        $wrappers = array_merge($wrappers, $ftpWrappers);
 
 
         // activate hooks
@@ -125,10 +127,10 @@ class ACLComponent
             die(var_dump($operation));
         };
 
-        $standartFsWrappers = require __DIR__ . '/hooks/process.php';
+        $standartWrappers = require __DIR__ . '/hooks/process.php';
 
         $wrappers = [];
-        $wrappers = array_merge($wrappers, $standartFsWrappers);
+        $wrappers = array_merge($wrappers, $standartWrappers);
 
         // activate hooks
         foreach ($wrappers as $feWrappers) {
