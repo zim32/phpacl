@@ -6,6 +6,7 @@ return [
     [['fwrite', 'file_put_contents'], function($src) use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_WRITE;
         $operation->setSrc($src);
         $processRules($operation);
@@ -13,6 +14,7 @@ return [
     [['fread', 'fgets', 'fgetss', 'fgetc', 'fgetcsv'], function($fd) use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_READ;
         $operation->setSrc($fd);
         $processRules($operation);
@@ -20,6 +22,7 @@ return [
     [['file_get_contents'], function($src) use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_READ;
         $operation->setSrc($src);
         $processRules($operation);
@@ -27,6 +30,7 @@ return [
     [['fopen'], function($src) use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_OPEN;
         $operation->setSrc($src);
         $processRules($operation);
@@ -34,6 +38,7 @@ return [
     [['file'], function($src) use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_READ;
         $operation->setSrc($src);
         $processRules($operation);

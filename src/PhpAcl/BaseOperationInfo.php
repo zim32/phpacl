@@ -24,4 +24,5 @@ class BaseOperationInfo
     {
         return $this->callStack;
     }
+
 }

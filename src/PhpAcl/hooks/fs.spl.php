@@ -12,6 +12,7 @@ return [
     ], function() use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_WRITE;
         $operation->setSrc($this->getPath());
         $processRules($operation);
@@ -31,6 +32,7 @@ return [
     ], function() use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_READ;
         $operation->setSrc($this->getPath());
         $processRules($operation);
@@ -40,6 +42,7 @@ return [
     ], function() use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);
         $operation->type = IOOperation::TYPE_OPEN;
         $operation->setSrc($this->getPath());
         $processRules($operation);

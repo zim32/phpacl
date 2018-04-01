@@ -5,12 +5,20 @@ namespace PhpAcl;
 
 class IOOperation extends BaseOperationInfo
 {
-    const TYPE_READ    = 'read';
-    const TYPE_WRITE   = 'write';
-    const TYPE_OPEN    = 'open';
-    const TYPE_DELETE  = 'delete';
-    const TYPE_BIND    = 'bind';
-    const TYPE_CONNECT = 'connect';
+    const TYPE_READ         = 'read';
+    const TYPE_WRITE        = 'write';
+    const TYPE_COPY         = 'copy';
+    const TYPE_OPEN         = 'open';
+    const TYPE_DELETE       = 'delete';
+    const TYPE_SOCK_INIT    = 'sock_init';
+    const TYPE_SOCK_ACCEPT  = 'sock_accept';
+    const TYPE_SOCK_READ    = 'sock_read';
+    const TYPE_SOCK_WRITE   = 'sock_write';
+
+    const GROUP_FILEIO   = 'fileio';
+    const GROUP_SOCKIO   = 'sockio';
+    const GROUP_STREAMIO = 'streamio';
+    const GROUP_FTPIO    = 'ftpio';
 
     /**
      * Raw IO src
@@ -28,6 +36,11 @@ class IOOperation extends BaseOperationInfo
      * @var string | resource
      */
     protected $dst;
+
+    /**
+     * @var string
+     */
+    protected $group;
 
     public $type;
 
@@ -52,13 +65,13 @@ class IOOperation extends BaseOperationInfo
      */
     public function getSrc()
     {
-        if (is_string($this->src)) {
+        if (is_scalar($this->src)) {
             return $this->src;
         }
 
         if (is_resource($this->src)) {
             $metadata = stream_get_meta_data($this->src);
-            return $metadata['uri'];
+            return $metadata['uri'] ?? '';
         }
 
         return false;
@@ -83,17 +96,33 @@ class IOOperation extends BaseOperationInfo
     }
 
     /**
+     * @return mixed
+     */
+    public function getGroup()
+    {
+        return $this->group;
+    }
+
+    /**
+     * @param mixed $group
+     */
+    public function setGroup($group)
+    {
+        $this->group = $group;
+    }
+
+    /**
      * @return string | boolean
      */
     public function getDst()
     {
-        if (is_string($this->dst)) {
+        if (is_scalar($this->dst)) {
             return $this->dst;
         }
 
         if (is_resource($this->dst)) {
             $metadata = stream_get_meta_data($this->dst);
-            return $metadata['uri'];
+            return $metadata['uri'] ?? '';
         }
 
         return false;
@@ -137,22 +166,6 @@ class IOOperation extends BaseOperationInfo
     public function isOpenOperation()
     {
         return $this->type === self::TYPE_OPEN;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isConnectOperation()
-    {
-        return $this->type === self::TYPE_CONNECT;
-    }
-
-    /**
-     * @return bool
-     */
-    public function isBindOperation()
-    {
-        return $this->type === self::TYPE_BIND;
     }
 
     /**
