@@ -47,4 +47,13 @@ return [
         $operation->setDst($dir);
         $processRules($operation);
     }],
+    [['ftp_exec'], function($stream, $command) use($processRules) {
+        $operation = new IOOperation();
+        $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
+        $operation->setGroup(\PhpAcl\IOOperation::GROUP_FTPIO);
+        $operation->type = IOOperation::TYPE_FTP_EXEC;
+        $operation->setSrc($stream);
+        $operation->setDst($command);
+        $processRules($operation);
+    }],
 ];

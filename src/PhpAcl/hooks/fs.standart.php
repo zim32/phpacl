@@ -11,7 +11,7 @@ return [
         $operation->setSrc($src);
         $processRules($operation);
     }],
-    [['fread', 'fgets', 'fgetss', 'fgetc', 'fgetcsv'], function($fd) use($processRules) {
+    [['fread', 'fgets', 'fgetss', 'fgetc', 'fgetcsv', 'highlight_file'], function($fd) use($processRules) {
         $operation = new IOOperation();
         $operation->setCallStack(debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS));
         $operation->setGroup(\PhpAcl\IOOperation::GROUP_FILEIO);

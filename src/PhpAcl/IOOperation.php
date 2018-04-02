@@ -16,11 +16,15 @@ class IOOperation extends BaseOperationInfo
     const TYPE_SOCK_ACCEPT  = 'sock_accept';
     const TYPE_SOCK_READ    = 'sock_read';
     const TYPE_SOCK_WRITE   = 'sock_write';
+    const TYPE_FTP_EXEC     = 'ftp_exec';
+    const TYPE_CURL_INIT    = 'curl_init';
+    const TYPE_CURL_EXEC    = 'curl_exec';
 
     const GROUP_FILEIO   = 'fileio';
     const GROUP_SOCKIO   = 'sockio';
     const GROUP_STREAMIO = 'streamio';
     const GROUP_FTPIO    = 'ftpio';
+    const GROUP_CURLIO   = 'curlio';
 
     /**
      * Raw IO src
@@ -181,6 +185,14 @@ class IOOperation extends BaseOperationInfo
     /**
      * @return bool
      */
+    public function isCreateOperation()
+    {
+        return $this->type === self::TYPE_CREATE;
+    }
+
+    /**
+     * @return bool
+     */
     public function isReadOrOpenOperation()
     {
         return $this->isReadOperation() || $this->isOpenOperation();
@@ -192,6 +204,14 @@ class IOOperation extends BaseOperationInfo
     public function isWriteOrOpenOperation()
     {
         return $this->isWriteOperation() || $this->isOpenOperation();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isReadOrWriteOperation()
+    {
+        return $this->isReadOperation() || $this->isWriteOperation() || $this->isOpenOperation() || $this->isCreateOperation();
     }
 
 }

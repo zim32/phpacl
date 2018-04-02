@@ -72,19 +72,23 @@ class ACLComponent
             die(var_dump($operation));
         };
 
-        $standartFsWrappers = require __DIR__ . '/hooks/fs.standart.php';
-        $splFsWrappers      = require __DIR__ . '/hooks/fs.spl.php';
-        $streamWrappers     = require __DIR__ . '/hooks/stream.php';
-        $socketWrappers     = require __DIR__ . '/hooks/socket.php';
-        $ftpWrappers        = require __DIR__ . '/hooks/fs.ftp.php';
-
+        // load all wrappers
         $wrappers = [];
-        $wrappers = array_merge($wrappers, $standartFsWrappers);
-        $wrappers = array_merge($wrappers, $splFsWrappers);
-        $wrappers = array_merge($wrappers, $streamWrappers);
-        $wrappers = array_merge($wrappers, $socketWrappers);
-        $wrappers = array_merge($wrappers, $ftpWrappers);
+        $wrappers = array_merge($wrappers, require __DIR__ . '/hooks/fs.standart.php');
+        $wrappers = array_merge($wrappers, require __DIR__ . '/hooks/stream.php');
 
+        if (extension_loaded('SPL')) {
+            $wrappers = array_merge($wrappers, require __DIR__ . '/hooks/fs.spl.php');
+        }
+        if (extension_loaded('sockets')) {
+            $wrappers = array_merge($wrappers, require __DIR__ . '/hooks/socket.php');
+        }
+        if (extension_loaded('ftp')) {
+            $wrappers = array_merge($wrappers, require __DIR__ . '/hooks/fs.ftp.php');
+        }
+        if (extension_loaded('curl')) {
+            $wrappers = array_merge($wrappers, require __DIR__ . '/hooks/curl.php');
+        }
 
         // activate hooks
         foreach ($wrappers as $feWrappers) {
